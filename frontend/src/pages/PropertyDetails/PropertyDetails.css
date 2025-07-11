@@ -1,0 +1,412 @@
+.property-details-page {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f4f7fb;
+  padding-bottom: 2rem;
+}
+
+.property-details-card {
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.04);
+  padding: 2.5rem 2.5rem 2.5rem 2rem;
+  margin-bottom: 2.5rem;
+  max-width: 1100px;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.property-gallery {
+  flex: 1 1 350px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.gallery-thumbnails {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 0.7rem;
+}
+.gallery-thumb {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid #e0e0e0;
+  transition: border 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.gallery-thumb:hover {
+  border: 2px solid #00b894;
+  box-shadow: 0 4px 16px rgba(0,184,148,0.10);
+}
+
+.lightbox-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.90);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  animation: fadeIn 0.3s;
+}
+.lightbox-image {
+  max-width: 92vw;
+  max-height: 82vh;
+  border-radius: 14px;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.22);
+  margin-bottom: 1.2rem;
+}
+.lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 2.7rem;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1010;
+  font-weight: bold;
+  transition: color 0.18s;
+}
+.lightbox-close:hover {
+  color: #00b894;
+}
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  font-size: 2.2rem;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  z-index: 1010;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s;
+}
+.lightbox-prev { left: 40px; }
+.lightbox-next { right: 40px; }
+.lightbox-nav:hover { background: #00b894; }
+
+.no-image {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f8fa;
+  border-radius: 10px;
+  color: #b0b8c1;
+  font-size: 1.1rem;
+}
+
+.property-video-player {
+  width: 100%;
+  margin: 1.2rem 0 1.5rem 0;
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+}
+
+.property-info {
+  flex: 2 1 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding-left: 1.5rem;
+  min-width: 320px;
+}
+.property-info h2 {
+  margin-bottom: 0.5rem;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #232a36;
+}
+.property-info p {
+  margin: 0.2rem 0;
+  font-size: 1.08rem;
+  color: #444;
+}
+.property-info .property-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #00b894;
+  margin-bottom: 0.5rem;
+}
+
+.property-features-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin: 0.7rem 0 0.2rem 0;
+}
+.property-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #f4f7fb;
+  border-radius: 6px;
+  padding: 0.4rem 0.9rem;
+  font-size: 1.02rem;
+  color: #232a36;
+  font-weight: 500;
+}
+.property-feature svg {
+  width: 20px;
+  height: 20px;
+  color: #00b894;
+}
+
+.property-share-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 0.7rem;
+  flex-wrap: wrap;
+}
+.property-share-row h2 {
+  margin: 0;
+  font-size: 2.1rem;
+  flex: 1 1 auto;
+}
+.property-share-btns {
+  display: flex;
+  gap: 0.5rem;
+}
+.share-btn {
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.18s, border 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 0;
+}
+.share-btn:hover, .share-btn:focus {
+  background: #e0f7fa;
+  border-color: #00b894;
+  outline: none;
+}
+.share-msg {
+  color: #00b894;
+  font-size: 1rem;
+  margin-left: 0.7rem;
+  font-weight: 500;
+}
+
+.inquiry-section {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.09);
+  padding: 2rem 2.2rem;
+  max-width: 420px;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+.inquiry-section h3 {
+  margin-bottom: 1.2rem;
+  font-size: 1.25rem;
+  color: #00b894;
+}
+.inquiry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.inquiry-form input,
+.inquiry-form textarea {
+  padding: 1rem 1.1rem;
+  border: 1.5px solid #dbe6e4;
+  border-radius: 7px;
+  font-size: 1.05rem;
+  background: #f7f8fa;
+  transition: border 0.2s;
+}
+.inquiry-form input:focus,
+.inquiry-form textarea:focus {
+  border: 1.5px solid #00b894;
+  outline: none;
+  background: #fff;
+}
+.inquiry-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+.inquiry-form button[type="submit"] {
+  padding: 1rem;
+  background: #00b894;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 1.12rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,184,148,0.07);
+}
+.inquiry-form button[type="submit"]:disabled {
+  background: #b0b8c1;
+  cursor: not-allowed;
+}
+
+.form-error {
+  color: #d63031;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
+.form-success {
+  color: #00b894;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.similar-properties-section {
+  margin-top: 2.5rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 1.7rem 1.2rem 1.4rem 1.2rem;
+  max-width: 1100px;
+  width: 100%;
+}
+.similar-properties-section h3 {
+  margin-bottom: 1.2rem;
+  font-size: 1.25rem;
+  color: #00b894;
+}
+.similar-properties-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: flex-start;
+}
+.similar-property-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+  padding: 1.1rem 1.3rem;
+  min-width: 210px;
+  max-width: 250px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+.similar-property-card:hover {
+  box-shadow: 0 4px 16px rgba(0,184,148,0.13);
+  transform: translateY(-2px) scale(1.04);
+}
+.similar-property-image {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 7px;
+  margin-bottom: 0.5rem;
+  background: #ececec;
+}
+.similar-property-card h4 {
+  margin: 0.2rem 0 0.1rem 0;
+  font-size: 1.13rem;
+  color: #232a36;
+  text-align: center;
+}
+.similar-property-card p {
+  margin: 0.1rem 0;
+  color: #555;
+  font-size: 1.01rem;
+  text-align: center;
+}
+.similar-property-card .details-btn {
+  margin-top: 0.5rem;
+  font-size: 1.01rem;
+  padding: 0.4rem 1.1rem;
+  background: #00b894;
+  color: #fff;
+  border-radius: 6px;
+  border: none;
+  transition: background 0.18s;
+  text-decoration: none;
+  font-weight: 500;
+}
+.similar-property-card .details-btn:hover {
+  background: #009e74;
+}
+
+.contact-broker-note {
+  margin: 1.2rem auto 0.7rem auto;
+  background: #f8f9fa;
+  color: #636e72;
+  border-radius: 8px;
+  padding: 0.7rem 1.2rem;
+  font-size: 1.13rem;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 1.5px 6px rgba(0,0,0,0.04);
+  font-weight: 500;
+}
+
+@media (max-width: 1100px) {
+  .property-details-card {
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 0.7rem;
+    gap: 1.5rem;
+  }
+  .property-info {
+    padding-left: 0;
+    min-width: 0;
+  }
+}
+@media (max-width: 700px) {
+  .property-details-card {
+    padding: 0.7rem 0.2rem;
+    gap: 1rem;
+  }
+  .property-info h2 {
+    font-size: 1.25rem;
+  }
+  .property-info .property-price {
+    font-size: 1.1rem;
+  }
+  .inquiry-section {
+    padding: 1.1rem 0.5rem;
+  }
+}
+@media (max-width: 600px) {
+  .gallery-thumb { width: 48px; height: 36px; }
+  .lightbox-image { max-width: 98vw; max-height: 60vh; }
+  .lightbox-close { top: 10px; right: 16px; font-size: 2rem; }
+  .lightbox-prev { left: 10px; }
+  .lightbox-next { right: 10px; }
+  .property-info h2 { font-size: 1.1rem; }
+  .property-info { gap: 0.6rem; }
+} 

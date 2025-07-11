@@ -1,0 +1,97 @@
+.profile-page {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.profile-page h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.profile-page p {
+  font-size: 1.1rem;
+  color: #232a36;
+}
+
+.profile-form {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1.5px 4px rgba(0,0,0,0.04);
+  padding: 2.2rem 2.5rem 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  min-width: 320px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.profile-form label {
+  font-weight: 600;
+  color: #232a36;
+  margin-bottom: 0.2rem;
+  font-size: 1.05rem;
+}
+
+.profile-form input {
+  padding: 0.85rem 1rem;
+  border: 1px solid #dbe6e9;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f7f8fa;
+  transition: border 0.2s;
+}
+
+.profile-form input:focus {
+  border: 1.5px solid #00b894;
+  outline: none;
+  background: #fff;
+}
+
+.profile-form button[type="submit"] {
+  padding: 0.95rem;
+  background: #00b894;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,184,148,0.08);
+}
+
+.profile-form button[type="submit"]:disabled {
+  background: #b0b8c1;
+  cursor: not-allowed;
+}
+
+.form-success {
+  color: #00b894;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.form-error {
+  color: #d63031;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .profile-form {
+    min-width: 0;
+    max-width: 98vw;
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+  }
+  .profile-page h2 {
+    font-size: 1.3rem;
+  }
+} 

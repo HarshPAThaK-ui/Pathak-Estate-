@@ -1,0 +1,95 @@
+.add-property-page {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.add-property-form {
+  background: #fff;
+  padding: 2.5rem 2rem 2rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1.5px 4px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  min-width: 320px;
+  max-width: 420px;
+  width: 100%;
+}
+
+.add-property-form input[type="text"],
+.add-property-form input[type="number"],
+.add-property-form textarea,
+.add-property-form select {
+  padding: 0.85rem 1rem;
+  border: 1px solid #dbe6e4;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f7f8fa;
+  transition: border 0.2s;
+}
+
+.add-property-form input:focus,
+.add-property-form textarea:focus,
+.add-property-form select:focus {
+  border: 1.5px solid #00b894;
+  outline: none;
+  background: #fff;
+}
+
+.add-property-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.add-property-form label {
+  font-size: 1rem;
+  color: #232a36;
+  margin-bottom: 0.2rem;
+}
+
+.add-property-form input[type="file"] {
+  margin-top: 0.3rem;
+}
+
+.add-property-form button[type="submit"] {
+  padding: 0.85rem;
+  background: #00b894;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.08rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+}
+
+.add-property-form button[type="submit"]:disabled {
+  background: #b0b8c1;
+  cursor: not-allowed;
+}
+
+.form-error {
+  color: #d63031;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.form-success {
+  color: #00b894;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+@media (max-width: 500px) {
+  .add-property-form {
+    min-width: 0;
+    padding: 1.5rem 0.5rem 1.5rem 0.5rem;
+  }
+} 

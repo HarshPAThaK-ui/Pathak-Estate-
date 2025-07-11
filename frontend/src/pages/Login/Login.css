@@ -1,0 +1,133 @@
+
+.login-page {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.login-form {
+  background: #fff;
+  padding: 2.5rem 2rem 2rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1.5px 4px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  min-width: 320px;
+  max-width: 370px;
+  width: 100%;
+}
+
+.login-form input {
+  padding: 0.85rem 1rem;
+  border: 1px solid #dbe6e4;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f7f8fa;
+  transition: border 0.2s;
+}
+
+.login-form input:focus {
+  border: 1.5px solid #00b894;
+  outline: none;
+  background: #fff;
+}
+
+.login-form button[type="submit"] {
+  padding: 0.85rem;
+  background: #00b894;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.08rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+}
+
+.login-form button[type="submit"]:disabled {
+  background: #b0b8c1;
+  cursor: not-allowed;
+}
+
+.form-error {
+  color: #d63031;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.password-input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.password-input-wrapper input[type="password"],
+.password-input-wrapper input[type="text"] {
+  flex: 1;
+}
+
+.show-password-btn {
+  margin-left: 0.5rem;
+  background: none;
+  border: none;
+  color: #00b894;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.show-password-btn:hover {
+  background: #e0f7f1;
+}
+
+.forgot-password-link {
+  margin-top: 1.2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.forgot-password-link a {
+  color: #00b894;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.forgot-password-link a:hover {
+  text-decoration: underline;
+  color: #009e74;
+}
+
+.register-link {
+  margin-top: 0.7rem;
+  text-align: center;
+  width: 100%;
+  font-size: 1rem;
+  color: #636e72;
+}
+.register-link a {
+  color: #00b894;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 0.2rem;
+  transition: color 0.2s;
+}
+.register-link a:hover {
+  text-decoration: underline;
+  color: #009e74;
+}
+
+@media (max-width: 500px) {
+  .login-form {
+    min-width: 0;
+    padding: 1.5rem 0.5rem 1.5rem 0.5rem;
+  }
+}

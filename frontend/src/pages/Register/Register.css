@@ -1,0 +1,43 @@
+.register-page {
+  padding: 2rem;
+  max-width: 400px;
+  margin: 0 auto;
+} 
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.register-form input {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.register-form button {
+  padding: 0.7rem;
+  background: #00b894;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.register-form button:disabled {
+  background: #b0b8c1;
+  cursor: not-allowed;
+}
+
+.form-error {
+  color: #d63031;
+  margin-top: 0.5rem;
+}
+
+.form-success {
+  color: #00b894;
+  margin-top: 0.5rem;
+}
