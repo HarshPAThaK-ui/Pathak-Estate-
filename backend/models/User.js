@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema({
   emailVerificationOTPExpires: { type: Date },
   resetPasswordOTP: { type: String },
   resetPasswordOTPExpires: { type: Date },
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Property' }],
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema); 

@@ -44,8 +44,8 @@ router.put('/:id', authMiddleware, upload.fields([
 router.put('/bulk-approve', authMiddleware, roleMiddleware, propertyController.bulkApproveProperties);
 router.put('/bulk-reject', authMiddleware, roleMiddleware, propertyController.bulkRejectProperties);
 router.post('/bulk-delete', authMiddleware, roleMiddleware, propertyController.bulkDeleteProperties);
-// Single delete (admin only)
-router.delete('/:id', authMiddleware, roleMiddleware, propertyController.deleteProperty);
+// Single delete (admin or owner only)
+router.delete('/:id', authMiddleware, propertyController.deleteProperty);
 
 // Admin analytics/stats
 router.get('/admin/stats', authMiddleware, roleMiddleware, propertyController.getAdminStats);

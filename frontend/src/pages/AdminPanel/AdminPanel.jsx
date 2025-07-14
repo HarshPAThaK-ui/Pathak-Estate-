@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 import './AdminPanel.css';
+import MyMessagesModal from '../../components/MyMessagesModal';
+import '../../components/MyMessagesModal.css';
 
 const API_BASE = 'http://localhost:5000/api';
 
@@ -34,6 +36,7 @@ const AdminPanel = () => {
   const [selectedProperties, setSelectedProperties] = useState([]);
   const [contactMessages, setContactMessages] = useState([]);
   const [contactSearch, setContactSearch] = useState('');
+  const [showMessages, setShowMessages] = useState(false);
 
   const token = localStorage.getItem('token');
   const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
@@ -824,6 +827,19 @@ const AdminPanel = () => {
           {activeTab === 'inquiries' && renderInquiries()}
           {activeTab === 'testimonials' && renderTestimonials()}
           {activeTab === 'contact' && renderContactMessages()}
+          {/* Floating message button for admin */}
+          {user && user.role === 'admin' && (
+            <>
+              <button
+                className="dashboard-message-btn"
+                onClick={() => setShowMessages(true)}
+                title="My Messages"
+              >
+                💬
+              </button>
+              <MyMessagesModal open={showMessages} onClose={() => setShowMessages(false)} />
+            </>
+          )}
         </div>
       </div>
     </div>

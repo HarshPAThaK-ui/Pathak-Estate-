@@ -304,11 +304,18 @@ exports.bulkDeleteProperties = async (req, res) => {
   }
 };
 
-// Single delete property (admin only)
+// Single delete property (admin or owner only)
 exports.deleteProperty = async (req, res) => {
   try {
-    const property = await Property.findByIdAndDelete(req.params.id);
+    const property = await Property.findById(req.params.id);
     if (!property) return res.status(404).json({ message: 'Property not found' });
+
+    // Only allow owner or admin
+    if (property.createdBy.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Not authorized to delete this property' });
+    }
+
+    await property.deleteOne();
     res.json({ message: 'Property deleted', property });
   } catch (err) {
     res.status(500).json({ message: err.message });

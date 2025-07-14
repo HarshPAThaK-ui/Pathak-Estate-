@@ -6,7 +6,7 @@ const Footer = () => (
   <footer className="footer">
     <div className="footer__top">
       <div className="footer__brand">
-        <img src="/logo192.png" alt="Pathak Estates" className="footer__logo" />
+        {/* Remove broken logo image, use text only */}
         <span className="footer__tagline">Your Trusted Property Partner</span>
       </div>
       <div className="footer__links">

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './MyProperties.css';
+import Spinner from '../../components/Spinner';
+import EmptyState from '../../components/EmptyState';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
 const initialForm = {
   title: '', description: '', price: '', location: '', area: '', areaUnit: '', bedrooms: '', bathrooms: '', propertyType: '', phone: '', whatsapp: '', address: '', postalCode: '', areaName: '', status: '', features: '', images: [], video: ''
@@ -21,6 +24,8 @@ const MyProperties = () => {
   const [deletedVideo, setDeletedVideo] = useState(false);
   const [newImages, setNewImages] = useState([]);
   const [newVideo, setNewVideo] = useState(null);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [pendingDeleteId, setPendingDeleteId] = useState(null);
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -111,30 +116,36 @@ const MyProperties = () => {
     setEditLoading(false);
   };
   const confirmDelete = (id) => {
-    setDeleteId(id);
-    setDeleteError('');
+    setPendingDeleteId(id);
+    setShowDeleteDialog(true);
   };
   const cancelDelete = () => {
-    setDeleteId(null);
-    setDeleteError('');
+    setShowDeleteDialog(false);
+    setPendingDeleteId(null);
   };
   const handleDelete = async () => {
+    setShowDeleteDialog(false);
+    if (!pendingDeleteId) return;
+    setDeleteId(pendingDeleteId);
     setDeleteLoading(true);
     setDeleteError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/properties/${deleteId}`, {
+      const res = await fetch(`http://localhost:5000/api/properties/${pendingDeleteId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Failed to delete property');
-      setProperties((prev) => prev.filter(p => p._id !== deleteId));
-      setDeleteId(null);
-    } catch (err) {
-      setDeleteError(err.message || 'Failed to delete property');
+      if (!res.ok) {
+        setDeleteError(data.message || 'Failed to delete property');
+      } else {
+        setProperties(properties.filter(p => p._id !== pendingDeleteId));
+      }
+    } catch {
+      setDeleteError('Something went wrong.');
     }
     setDeleteLoading(false);
+    setPendingDeleteId(null);
   };
 
   const statusColor = (status) => {
@@ -154,35 +165,38 @@ const MyProperties = () => {
   return (
     <div className="my-properties-page">
       <h2>My Properties</h2>
-      {loading && <div>Loading...</div>}
-      {error && <div className="form-error">{error}</div>}
-      {!loading && !error && properties.length === 0 && (
-        <div>No properties found.</div>
-      )}
-      <div className="properties-list">
-        {properties.map((property) => (
-          <div className="property-card" key={property._id}>
-            {property.images && property.images[0] && (
-              <img
-                src={getMediaUrl(property.images[0])}
-                alt={property.title}
-                className="property-card-image"
-              />
-            )}
-            <h3>{property.title}</h3>
-            <p>{property.location}</p>
-            <p>
-              Status: <span className="status-badge" style={{ background: statusColor(property.approvalStatus) }}>{property.approvalStatus}</span>
-            </p>
-            <p>Price: ₹{property.price}</p>
-            <p>{property.description}</p>
-            <div className="property-actions">
-              <button className="edit-btn" onClick={() => openEdit(property)}>Edit</button>
-              <button className="delete-btn" onClick={() => confirmDelete(property._id)}>Delete</button>
+      {loading ? (
+        <Spinner />
+      ) : error ? (
+        <EmptyState icon="❌" message={error} />
+      ) : properties.length === 0 ? (
+        <EmptyState icon="📭" message="You have not added any properties yet." />
+      ) : (
+        <div className="properties-list">
+          {properties.map((property) => (
+            <div className="property-card" key={property._id}>
+              {property.images && property.images[0] && (
+                <img
+                  src={getMediaUrl(property.images[0])}
+                  alt={property.title}
+                  className="property-card-image"
+                />
+              )}
+              <h3>{property.title}</h3>
+              <p>{property.location}</p>
+              <p>
+                Status: <span className="status-badge" style={{ background: statusColor(property.approvalStatus) }}>{property.approvalStatus}</span>
+              </p>
+              <p>Price: ₹{property.price}</p>
+              <p>{property.description}</p>
+              <div className="property-actions">
+                <button className="edit-btn" onClick={() => openEdit(property)}>Edit</button>
+                <button className="delete-btn" onClick={() => confirmDelete(property._id)}>Delete</button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
       {editModal && (
         <div className="modal-overlay" onClick={closeEdit}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
@@ -230,19 +244,13 @@ const MyProperties = () => {
           </div>
         </div>
       )}
-      {deleteId && (
-        <div className="modal-overlay" onClick={cancelDelete}>
-          <div className="delete-modal-content" onClick={e => e.stopPropagation()}>
-            <h3>Delete Property</h3>
-            <p>Are you sure you want to delete this property?</p>
-            <div className="modal-actions">
-              <button className="delete-btn" onClick={handleDelete} disabled={deleteLoading}>{deleteLoading ? 'Deleting...' : 'Delete'}</button>
-              <button className="edit-btn" onClick={cancelDelete}>Cancel</button>
-            </div>
-            {deleteError && <div className="form-error">{deleteError}</div>}
-          </div>
-        </div>
-      )}
+      <ConfirmDialog
+        open={showDeleteDialog}
+        title="Delete Property"
+        message="Are you sure you want to delete this property? This action cannot be undone."
+        onConfirm={handleDelete}
+        onCancel={cancelDelete}
+      />
     </div>
   );
 };

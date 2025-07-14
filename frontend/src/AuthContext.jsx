@@ -1,11 +1,22 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { jwtDecode } from "jwt-decode";
+import Toast from './components/Toast/Toast';
 
 const AuthContext = createContext();
+const ToastContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export function useAuth() {
+  return useContext(AuthContext);
+}
+export function useToast() {
+  return useContext(ToastContext);
+}
+
+export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => localStorage.getItem('token'));
   const [user, setUser] = useState(null);
+  const [toast, setToast] = useState({ message: '', type: 'info' });
+  const [toastOpen, setToastOpen] = useState(false);
 
   useEffect(() => {
     if (token) {
@@ -37,11 +48,19 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const showToast = useCallback((message, type = 'info') => {
+    setToast({ message, type });
+    setToastOpen(true);
+    setTimeout(() => setToastOpen(false), 3500);
+  }, []);
+  const closeToast = () => setToastOpen(false);
+
   return (
     <AuthContext.Provider value={{ token, user, login, logout, isLoggedIn: !!token }}>
-      {children}
+      <ToastContext.Provider value={{ showToast }}>
+        {children}
+        <Toast message={toastOpen ? toast.message : ''} type={toast.type} onClose={closeToast} />
+      </ToastContext.Provider>
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => useContext(AuthContext); 
+} 

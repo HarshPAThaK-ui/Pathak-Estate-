@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Dashboard.css';
+import Spinner from '../../components/Spinner';
+import EmptyState from '../../components/EmptyState';
+import ChatModal from '../../components/ChatModal';
+import { useAuth } from '../../AuthContext';
+import MyMessagesModal from '../../components/MyMessagesModal';
+import '../../components/MyMessagesModal.css';
 
 const Dashboard = () => {
   const [stats, setStats] = useState({ total: 0, approved: 0, pending: 0, rejected: 0 });
@@ -8,6 +14,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const { isLoggedIn, user: authUser } = useAuth();
+  const [showMessages, setShowMessages] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -44,9 +52,9 @@ const Dashboard = () => {
         <Link to="/profile" className="dashboard-btn">Profile</Link>
       </div>
       {loading ? (
-        <div>Loading...</div>
+        <Spinner />
       ) : error ? (
-        <div className="form-error">{error}</div>
+        <EmptyState icon="❌" message={error} />
       ) : (
         <>
           <div className="dashboard-stats">
@@ -69,7 +77,9 @@ const Dashboard = () => {
           </div>
           <div className="dashboard-recent">
             <h3>Recent Properties</h3>
-            {recent.length === 0 ? <div>No recent properties.</div> : (
+            {recent.length === 0 ? (
+              <EmptyState icon="📭" message="No recent properties found." />
+            ) : (
               <div className="recent-list">
                 {recent.map((p) => (
                   <div className="recent-card" key={p._id}>
@@ -80,6 +90,19 @@ const Dashboard = () => {
               </div>
             )}
           </div>
+        </>
+      )}
+      {/* Floating message button */}
+      {isLoggedIn && (
+        <>
+          <button
+            className="dashboard-message-btn"
+            onClick={() => setShowMessages(true)}
+            title="My Messages"
+          >
+            💬
+          </button>
+          <MyMessagesModal open={showMessages} onClose={() => setShowMessages(false)} />
         </>
       )}
     </div>

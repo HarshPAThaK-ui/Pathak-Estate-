@@ -1,0 +1,95 @@
+.mymessages-modal__overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(36, 36, 36, 0.45);
+  z-index: 3002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+.mymessages-modal {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.18);
+  min-width: 340px;
+  max-width: 95vw;
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+  animation: chatModalIn 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.mymessages-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem 0.7rem 1.5rem;
+  border-bottom: 1px solid #ececec;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #667eea;
+}
+.mymessages-modal__close {
+  background: none;
+  border: none;
+  color: #636e72;
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: color 0.18s;
+  font-weight: bold;
+}
+.mymessages-modal__close:hover {
+  color: #d63031;
+}
+.mymessages-modal__body {
+  flex: 1;
+  padding: 1.2rem 1.5rem 1.2rem 1.5rem;
+  overflow-y: auto;
+  min-height: 180px;
+  max-height: 320px;
+}
+.mymessages-modal__empty {
+  color: #888;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+.mymessages-modal__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.mymessages-modal__item {
+  background: #f7f8fa;
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.07);
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.mymessages-modal__item:hover {
+  background: #e6e9fa;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.13);
+  transform: scale(1.03);
+}
+.mymessages-modal__item-title {
+  font-weight: 600;
+  color: #667eea;
+  font-size: 1.08rem;
+}
+.mymessages-modal__item-last {
+  color: #232a36;
+  font-size: 1.01rem;
+  margin-bottom: 0.2rem;
+}
+.mymessages-modal__item-meta {
+  font-size: 0.88rem;
+  color: #888;
+  text-align: right;
+}
+@keyframes chatModalIn {
+  from { opacity: 0; transform: scale(0.97) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+} 

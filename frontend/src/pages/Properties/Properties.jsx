@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Properties.css';
+import Spinner from '../../components/Spinner';
+import EmptyState from '../../components/EmptyState';
+import FavoriteButton from '../../components/FavoriteButton';
+import '../../components/FavoriteButton.css';
+import { useAuth } from '../../AuthContext';
 
 const initialFilters = {
   keywords: '',
-  propertyType: [], // Will become multi-select
+  propertyType: [], 
   status: '',
   minPrice: '',
   maxPrice: '',
@@ -13,7 +18,7 @@ const initialFilters = {
   areaUnit: '',
   bedrooms: '',
   bathrooms: '',
-  location: [], // Will become multi-select
+  location: [], 
   postalCode: '',
   areaName: '',
   sort: 'newest', // Add sort field
@@ -33,12 +38,18 @@ const Properties = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [filters, setFilters] = useState(initialFilters);
+  const location = useLocation();
+  // Parse keywords from URL
+  const params = new URLSearchParams(location.search);
+  const initialKeywords = params.get('keywords') || '';
+  const [filters, setFilters] = useState({ ...initialFilters, keywords: initialKeywords });
   const [locationSuggestions, setLocationSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [filterAnim, setFilterAnim] = useState('');
+  const { isLoggedIn } = useAuth();
+  const [favorites, setFavorites] = useState([]);
 
   // Animation logic for filter form
   useEffect(() => {
@@ -79,8 +90,26 @@ const Properties = () => {
 
   useEffect(() => {
     fetchProperties();
+    // Fetch favorites if logged in
+    const fetchFavorites = async () => {
+      if (!isLoggedIn) return;
+      try {
+        const token = localStorage.getItem('token');
+        const res = await fetch('http://localhost:5000/api/auth/favorites', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (res.ok) setFavorites(data.favorites.map(f => f._id));
+      } catch {}
+    };
+    fetchFavorites();
+    // If keywords in URL change, update filters and fetch
+    if (params.get('keywords') !== filters.keywords) {
+      setFilters(f => ({ ...f, keywords: params.get('keywords') || '' }));
+      fetchProperties({ ...filters, keywords: params.get('keywords') || '' });
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [location.search, isLoggedIn]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -141,6 +170,10 @@ const Properties = () => {
     fetchProperties(initialFilters);
   };
 
+  const handleToggleFavorite = (propertyId, nowFavorite) => {
+    setFavorites(favs => nowFavorite ? [...favs, propertyId] : favs.filter(id => id !== propertyId));
+  };
+
   const getMediaUrl = (filePath) => {
     if (!filePath) return '';
     const parts = filePath.split(/[/\\]/);
@@ -150,7 +183,7 @@ const Properties = () => {
 
   return (
     <div className="properties-page">
-      <h2>Available Properties</h2>
+      <h2>Browse Properties</h2>
       <button
         className="toggle-filters-btn"
         onClick={() => setShowFilters((v) => !v)}
@@ -297,31 +330,41 @@ const Properties = () => {
           </div>
         </form>
       )}
-      {loading && <div>Loading...</div>}
-      {error && <div className="form-error">{error}</div>}
-      {!loading && !error && properties.length === 0 && (
-        <div>No properties found.</div>
+      {loading ? (
+        <Spinner />
+      ) : error ? (
+        <EmptyState icon="❌" message={error} />
+      ) : properties.length === 0 ? (
+        <EmptyState icon="📭" message="No properties found." />
+      ) : (
+        <div className="properties-list">
+          {properties.map((property) => (
+            <div className="property-card" key={property._id}>
+              {property.images && property.images[0] && (
+                <img
+                  src={getMediaUrl(property.images[0])}
+                  alt={property.title}
+                  className="property-image"
+                />
+              )}
+              <h3>{property.title}</h3>
+              <p>{property.location}</p>
+              <p>Status: <b>{property.status}</b></p>
+              <p>Price: ₹{property.price}</p>
+              <Link to={`/properties/${property._id}`} className="details-btn">
+                View Details
+              </Link>
+              {isLoggedIn && (
+                <FavoriteButton
+                  propertyId={property._id}
+                  isFavorite={favorites.includes(property._id)}
+                  onToggle={handleToggleFavorite}
+                />
+              )}
+            </div>
+          ))}
+        </div>
       )}
-      <div className="properties-list">
-        {properties.map((property) => (
-          <div className="property-card" key={property._id}>
-            {property.images && property.images[0] && (
-              <img
-                src={getMediaUrl(property.images[0])}
-                alt={property.title}
-                className="property-image"
-              />
-            )}
-            <h3>{property.title}</h3>
-            <p>{property.location}</p>
-            <p>Status: <b>{property.status}</b></p>
-            <p>Price: ₹{property.price}</p>
-            <Link to={`/properties/${property._id}`} className="details-btn">
-              View Details
-            </Link>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
