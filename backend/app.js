@@ -12,6 +12,12 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 console.log('Serving uploads from:', path.join(__dirname, 'uploads'));
+
+// Root route for health checks
+app.get('/', (req, res) => {
+  res.send('API is running');
+});
+
 const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);
 
