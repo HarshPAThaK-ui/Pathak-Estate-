@@ -23,7 +23,7 @@ const Profile = () => {
           setProfile({ name: user.name, email: user.email, phone: user.phone || '' });
         } else {
           // Fallback: fetch from backend (if needed)
-          const res = await fetch('http://localhost:5000/api/auth/me', { headers: { Authorization: `Bearer ${token}` } });
+          const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, { headers: { Authorization: `Bearer ${token}` } });
           const data = await res.json();
           if (res.ok) setProfile({ name: data.name, email: data.email, phone: data.phone || '' });
         }
@@ -47,7 +47,7 @@ const Profile = () => {
     setSuccess('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/auth/profile', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ name: profile.name, phone: profile.phone, password: password || undefined })

@@ -5,14 +5,14 @@ import './AdminPanel.css';
 import MyMessagesModal from '../../components/MyMessagesModal';
 import '../../components/MyMessagesModal.css';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = `${import.meta.env.VITE_API_URL}/api`;
 
 const getMediaUrl = (filePath) => {
   if (!filePath) return '';
   // Extract the filename from the path (works for both / and \\)
   const parts = filePath.split(/[/\\]/);
   const filename = parts[parts.length - 1];
-  return `http://localhost:5000/uploads/${filename}`;
+  return `${import.meta.env.VITE_API_URL}/uploads/${filename}`;
 };
 
 const AdminPanel = () => {

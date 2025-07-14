@@ -12,7 +12,7 @@ const FavoriteButton = ({ propertyId, isFavorite, onToggle, disabled }) => {
     try {
       const token = localStorage.getItem('token');
       const method = isFavorite ? 'DELETE' : 'POST';
-      const res = await fetch(`http://localhost:5000/api/auth/favorites/${propertyId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/favorites/${propertyId}`, {
         method,
         headers: { Authorization: `Bearer ${token}` }
       });

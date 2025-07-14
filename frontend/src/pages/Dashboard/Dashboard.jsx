@@ -23,7 +23,7 @@ const Dashboard = () => {
       setError('');
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:5000/api/properties/my', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/properties/my`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();

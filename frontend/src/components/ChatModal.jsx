@@ -21,7 +21,7 @@ const ChatModal = ({ open, onClose, propertyId, broker, userId, userRole }) => {
   const fetchMessages = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/auth/messages/${propertyId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/messages/${propertyId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -38,7 +38,7 @@ const ChatModal = ({ open, onClose, propertyId, broker, userId, userRole }) => {
       const token = localStorage.getItem('token');
       const body = { propertyId, content: input };
       if (userRole === 'admin') body.userId = userId;
-      const res = await fetch('http://localhost:5000/api/auth/messages', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

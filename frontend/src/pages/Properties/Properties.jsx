@@ -74,7 +74,7 @@ const Properties = () => {
           params.append(key, value);
         }
       });
-      const url = `http://localhost:5000/api/properties${params.toString() ? '?' + params.toString() : ''}`;
+      const url = `${import.meta.env.VITE_API_URL}/api/properties${params.toString() ? '?' + params.toString() : ''}`;
       const res = await fetch(url);
       const data = await res.json();
       if (!res.ok) {
@@ -95,7 +95,7 @@ const Properties = () => {
       if (!isLoggedIn) return;
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:5000/api/auth/favorites', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/favorites`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
@@ -178,7 +178,7 @@ const Properties = () => {
     if (!filePath) return '';
     const parts = filePath.split(/[/\\]/);
     const filename = parts[parts.length - 1];
-    return `http://localhost:5000/uploads/${filename}`;
+    return `${import.meta.env.VITE_API_URL}/uploads/${filename}`;
   };
 
   return (

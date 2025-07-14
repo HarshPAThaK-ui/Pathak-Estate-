@@ -33,7 +33,7 @@ const PropertyDetails = () => {
       setLoading(true);
       setError('');
       try {
-        const res = await fetch(`http://localhost:5000/api/properties/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/properties/${id}`);
         const data = await res.json();
         if (!res.ok) {
           setError(data.message || 'Failed to fetch property');
@@ -66,7 +66,7 @@ const PropertyDetails = () => {
           minPrice,
           maxPrice
         });
-        const res = await fetch(`http://localhost:5000/api/properties?${params.toString()}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/properties?${params.toString()}`);
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || 'Failed to fetch similar properties');
         // Exclude current property and limit to 4
@@ -84,7 +84,7 @@ const PropertyDetails = () => {
       if (!isLoggedIn || !id) return;
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:5000/api/auth/favorites', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/favorites`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
@@ -106,7 +106,7 @@ const PropertyDetails = () => {
     setInquiryMsg('');
     setInquiryError('');
     try {
-      const res = await fetch('http://localhost:5000/api/inquiries', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/inquiries`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...inquiry, propertyId: id })
@@ -173,7 +173,7 @@ const PropertyDetails = () => {
     if (!filePath) return '';
     const parts = filePath.split(/[/\\]/);
     const filename = parts[parts.length - 1];
-    return `http://localhost:5000/uploads/${filename}`;
+    return `${import.meta.env.VITE_API_URL}/uploads/${filename}`;
   };
 
   return (

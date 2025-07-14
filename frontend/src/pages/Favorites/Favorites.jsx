@@ -22,7 +22,7 @@ const Favorites = () => {
   const fetchFavorites = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/auth/favorites', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/favorites`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -53,7 +53,7 @@ const Favorites = () => {
         <div className="favorites-list">
           {favorites.map(property => (
             <div className="property-card" key={property._id}>
-              <img src={property.images && property.images[0] ? `http://localhost:5000/${property.images[0].replace(/\\/g, '/')}` : '/default-property.jpg'} alt={property.title || property.name} className="property-image" />
+              <img src={property.images && property.images[0] ? `${import.meta.env.VITE_API_URL}/${property.images[0].replace(/\\/g, '/')}` : '/default-property.jpg'} alt={property.title || property.name} className="property-image" />
               <h3>{property.title || property.name}</h3>
               <p>{property.location}</p>
               <p><b>Price:</b> ₹{property.price?.toLocaleString()}</p>

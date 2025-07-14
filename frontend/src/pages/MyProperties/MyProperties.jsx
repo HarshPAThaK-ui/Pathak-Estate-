@@ -33,7 +33,7 @@ const MyProperties = () => {
       setError('');
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:5000/api/properties/my', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/properties/my`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
@@ -101,7 +101,7 @@ const MyProperties = () => {
       formData.append('deletedVideo', deletedVideo);
       newImages.forEach(img => formData.append('newImages', img));
       if (newVideo) formData.append('newVideo', newVideo);
-      const res = await fetch(`http://localhost:5000/api/properties/${editId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/properties/${editId}`, {
         method: 'PUT',
         headers: { Authorization: `Bearer ${token}` },
         body: formData
@@ -131,7 +131,7 @@ const MyProperties = () => {
     setDeleteError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/properties/${pendingDeleteId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/properties/${pendingDeleteId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -159,7 +159,7 @@ const MyProperties = () => {
     if (!filePath) return '';
     const parts = filePath.split(/[/\\]/);
     const filename = parts[parts.length - 1];
-    return `http://localhost:5000/uploads/${filename}`;
+    return `${import.meta.env.VITE_API_URL}/uploads/${filename}`;
   };
 
   return (

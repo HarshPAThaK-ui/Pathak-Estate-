@@ -16,7 +16,7 @@ const VerifyEmail = () => {
     setMessage('');
     setError('');
     try {
-      const res = await fetch('http://localhost:5000/api/auth/verify-email', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/verify-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp })

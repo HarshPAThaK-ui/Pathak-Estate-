@@ -51,7 +51,7 @@ const AddProperty = () => {
       if (video) formData.append('video', video);
 
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/properties', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/properties`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
